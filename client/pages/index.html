@@ -1,0 +1,48 @@
+<head>
+  <title>Coin Charts</title>
+</head>
+
+<body>
+<div class="container-fluid">
+  <div class="page-header">
+    <h1>Coin Graphs
+      <small>Handlebars</small>
+    </h1>
+    {{> actionButtons}}
+  </div>
+</div>
+{{renderPage}}
+</body>
+
+<template name="actionButtons">
+  <div class="btn" id="startScraper">Start Scraper</div>
+  <div class="btn" id="deleteAllData">Delete All</div>
+</template>
+
+<template name="recentTrades">
+  <div class="row-fluid">
+    {{#key_value tradesPerPair}}
+    <div class="pair-column">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+        {{!-- key: pair --}}
+        <th>{{key}}</th>
+        </thead>
+        <tbody>
+        {{!-- value: trades --}}
+        {{#each value}}
+        {{> trade}}
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+    {{/key_value}}
+  </div>
+</template>
+
+<template name="trade">
+  <tr>
+    <td>{{date}}</td>
+  </tr>
+</template>
+

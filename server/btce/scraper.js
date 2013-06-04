@@ -11,23 +11,23 @@ Scraper = function () {
 }
 
 Scraper.prototype.startPair = function (pair) {
-  console.log('starting scraper for ' + pair);
+  log.debug('starting scraper for ' + pair);
   btce.trades({pair: pair, count: 2}, function(err, trades) {
     tradesCb(err, pair, trades);
   });
 }
 
 Scraper.prototype.startPairs = function (pairs) {
-  console.log('starting pairs ' + pairs);
+  log.debug('starting pairs ' + pairs);
   _.each(pairs, this.startPair);
 }
 
 function tradesCb(err, pair, trades) {
   if (err) {
-    console.log('trades - error');
-    console.log(err);
+    log.error('trades - error');
+    log.error(err);
   } else {
-    console.log('inserting');
+    log.debug('inserting');
     TradeCollections.insert(pair, trades);
   }
 }
