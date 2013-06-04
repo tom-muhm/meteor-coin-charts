@@ -48,7 +48,7 @@ if (ANGULARJS) {
   // Handlebars Templates
 
   Meteor.Router.add({
-    '/': 'recentTrades'
+    '/': 'handlebars-main'
   });
 
   Template.recentTrades.tradesPerPair = getTrades(TradeCollections);
