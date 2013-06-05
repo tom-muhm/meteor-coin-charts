@@ -1,4 +1,5 @@
 var HttpsAgent = Npm.require('agentkeepalive').HttpsAgent;
+var async = Npm.require('async');
 
 var agent = new HttpsAgent({
   maxSockets: 100,
@@ -10,14 +11,15 @@ var btce = new BTCE({agent: agent});
 Scraper = function () {
 }
 
-Scraper.prototype.startPair = function (pair) {
+Scraper.prototype.startPair = function (pair, callback) {
   log.debug('starting scraper for ' + pair);
   btce.trades({pair: pair, count: 2}, function(err, trades) {
     tradesCb(err, pair, trades);
+    return callback();
   });
 }
 
-Scraper.prototype.startPairs = function (pairs) {
+Scraper.prototype.startPairs = function (pairs, callback) {
   log.debug('starting pairs ' + pairs);
   _.each(pairs, this.startPair);
 }
@@ -28,6 +30,6 @@ function tradesCb(err, pair, trades) {
     log.error(err);
   } else {
     log.debug('inserting');
-    TradeCollections.insert(pair, trades);
+    Trades.insert(pair, trades);
   }
 }

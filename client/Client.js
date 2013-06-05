@@ -31,8 +31,8 @@ if (ANGULARJS) {
   };
 
   app.controller('MeteorCtrl', ['$scope', '$meteor', function ($scope, $meteor) {
-    $scope.Trades = $meteor('trades');
-    $scope.tradesPerPair = getTrades(getBtceTradeCollections($meteor));
+    // $scope.Trades = $meteor('trades');
+    $scope.tradesPerPair = getTrades(TradeCollections); //getTrades(getBtceTradeCollections($meteor));
     $scope.startScraper = function () {
       Meteor.call('startScraper');
     };
@@ -54,12 +54,25 @@ if (ANGULARJS) {
   Template.recentTrades.tradesPerPair = getTrades(TradeCollections);
 
   Template.actionButtons.events({
-    'click #startScraper': function (event) {
-      Meteor.call('startScraper');
+    'click #forceScraper': function (event) {
+      Meteor.call('forceScraper');
     },
     'click #deleteAllData': function (event) {
       Meteor.call('deleteAll');
     }
+//    TODO - make switch event work !
+//    'switch-change #toggleScraper': function(event) {
+//      console.log('start stop toggled');
+//      Meteor.call('toggleScraper');
+//    }
   });
+
+  Template.actionButtons.rendered = function () {
+    // apply bootstrap switch - to all switch classes
+    $('.switch')['bootstrapSwitch']();
+    $('#toggleScraper').on('switch-change', function (event, data) {
+      Meteor.call('toggleScraper', data.value);
+    });
+  }
 
 }

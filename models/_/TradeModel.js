@@ -12,7 +12,9 @@ if ((!ANGULARJS && Meteor.isClient) || Meteor.isServer) {
 
 if (Meteor.isServer) {
 
-  TradeCollections.insert = function (pair, trades) {
+  Trades = {};
+
+  Trades.insert = function (pair, trades) {
     var collection = TradeCollections[pair];
     Fiber(function () {
       _.each(trades, function (trade) {
@@ -21,7 +23,7 @@ if (Meteor.isServer) {
     }).run();
   };
 
-  TradeCollections.removeAll = function () {
+  Trades.removeAll = function () {
     _.each(TradeCollections, function (collection) {
       collection.remove({});
     })
