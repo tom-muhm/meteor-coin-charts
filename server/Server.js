@@ -2,13 +2,12 @@ Meteor.startup(function () {
   log.info("Startup");
 });
 
-var scraperRunning = false;
-var scraper = new Scraper();
+var allScraper = new Scraper(BTCE_PAIRS, 10000);
 
 Meteor.methods({
   forceScraper: function () {
     log.debug('method call: startScraper');
-    scraper.startPairs(BTCE_PAIRS, function() {
+    allScraper.startPairs(BTCE_PAIRS, function () {
       // callback
     });
   },
@@ -18,12 +17,18 @@ Meteor.methods({
     Trades.removeAll();
   },
 
-  toggleScraper: function(value) {
+  toggleScraper: function (value) {
     log.debug('method call: toggleScraper: ' + value)
     if (value === true) {
-
+      log.info('starting scraper');
+      allScraper.startSchedule(function () {
+        log.info('scraper started');
+      });
     } else {
-
+      log.info('stopping scraper');
+      allScraper.stopSchedule(function () {
+        log.info('scraper stopped');
+      });
     }
   }
 });
