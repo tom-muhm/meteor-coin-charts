@@ -4,7 +4,7 @@
 //
 // Iterate over an object, setting 'key' and 'value' for each property in
 // the object.
-Handlebars.registerHelper("key_value", function(obj, fn) {
+Handlebars.registerHelper("key_value", function (obj, fn) {
   var buffer = "",
     key;
 
@@ -43,4 +43,8 @@ Handlebars.registerHelper("each_with_key", function (obj, fn) {
   }
 
   return buffer;
+});
+
+Handlebars.registerHelper("formatDate", function (input, pattern) {
+  return moment.unix(input).format(pattern);
 });

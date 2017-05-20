@@ -1,6 +1,7 @@
 {
   "packages": {
     "angularjs": {},
-    "router": {}
+    "router": {},
+    "meteor_nvd3": {}
   }
 }
